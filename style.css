@@ -202,3 +202,82 @@ main {
   border-radius: 20px;
   font-size: 18px;
 }
+
+.main-produtos {
+  margin-top: 20px;
+  background-color: #ffffff;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.vitrine {
+  background-color: rgb(255, 255, 255);
+  width: 400px;
+  height: 550px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  border: 1.5px solid #000;
+  cursor: pointer;
+}
+
+.vitrine-img {
+  width: 350px;
+  height: 280px;
+  background-color: rgb(255, 255, 255);
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.vitrine-img img {
+  max-width: 300px;
+}
+
+.vitrine-nome {
+  width: 350px;
+  height: 60px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  color: #000;
+  font-size: 15px;
+
+}
+
+.vitrine-infos {
+  width: 350px;
+  height: 60px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+}
+
+.vitrine-butao {
+  width: 350px;
+  height: 50px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vitrine-butao button {
+  background-color: rgb(159, 0, 0);
+  color: #fff;
+  font-size: 20px;
+  width: 450px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
