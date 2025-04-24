@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ForceX - Carrinho</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" href="assets/logo.png">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="header-informacoes">
+        <h3>Parcelamos até 1000x Sem Juros</h3>
+      </div>
+      <div class="header-nav-bar">
+        <img src="assets/logo.png" class="logo" alt="ForceX Logo" />
+        <input class="header-input" type="text" placeholder="O que está procurando?" />
+        <ul class="header-links-list">
+          <li><a href="login-cadastro.html"><img src="assets/images-removebg-preview.png" alt="Login" /></a></li>
+          <li class="login-text"><a href="login-cadastro.html"><h4>Entre ou Cadastre-se</h4></a></li>
+          <li><a href="carrinho.html"><img src="assets/png-transparent-shopping-cart-icon.png" alt="Carrinho" /></a></li>
+        </ul>
+      </div>
+      <div class="header-nav-link">
+        <ul>
+          <li><a href="produtos.html?categoria=whey">WHEY-PROTEIN</a></li>
+          <li><a href="produtos.html?categoria=creatina">CREATINA</a></li>
+          <li><a href="produtos.html?categoria=pretreino">PRE-TREINO</a></li>
+          <li><a href="produtos.html?categoria=snacks">SNACKS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="carrinho-main">
+    <div class="carrinho-container">
+      <h2>Seu Carrinho</h2>
+      
+      <div class="carrinho-itens" id="carrinho-itens">
+        <!-- Itens do carrinho serão carregados aqui -->
+      </div>
+      
+      <div class="carrinho-resumo">
+        <div class="resumo-total">
+          <span>Subtotal:</span>
+          <span id="subtotal">R$ 0,00</span>
+        </div>
+        <div class="resumo-total">
+          <span>Frete:</span>
+          <span id="frete">Grátis</span>
+        </div>
+        <div class="resumo-total total">
+          <span>Total:</span>
+          <span id="total">R$ 0,00</span>
+        </div>
+        <button class="btn-finalizar-compra">Finalizar Compra</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="script-carrinho.js"></script>
+</body>
+</html>
