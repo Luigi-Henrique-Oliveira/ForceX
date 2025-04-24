@@ -1,115 +1,91 @@
-// Recuperar carrinho do localStorage
-let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-const carrinhoItens = document.getElementById('carrinho-itens');
-const subtotalElement = document.getElementById('subtotal');
-const totalElement = document.getElementById('total');
-const btnFinalizar = document.querySelector('.btn-finalizar-compra');
-
-// Função para renderizar itens do carrinho
-function renderizarCarrinho() {
-  carrinhoItens.innerHTML = '';
-  
-  if (carrinho.length === 0) {
-    carrinhoItens.innerHTML = '<p class="carrinho-vazio">Seu carrinho está vazio</p>';
-    subtotalElement.textContent = 'R$ 0,00';
-    totalElement.textContent = 'R$ 0,00';
-    return;
+const produtos = [
+  {
+    id: 1,
+    nome: "WHEY GOLD (1KG) - SABOR CHOCOLATE",
+    preco: 129.90,
+  imagem: "../assets/pngwing.com.png",
+    quantidade: 0,
+  },
+  {
+    id: 2,
+    nome: "CREATINA POWDER (300G) - 100% PURA",
+    preco: 89.90,
+    imagem: "../assets/pngwing.com (1).png",
+    quantidade: 0,
+  },
+  {
+    id: 3,
+    nome: "VITAMINA BCAA (345G) - AÇÃO INSTANTÂNEA",
+    preco: 79.90,
+    imagem: "../assets/pngwing.com (3).png",
+    quantidade: 0,
+  },
+  {
+    id: 4,
+    nome: "KIT ALFA 100% PURO (10KG) - DE PURA EMOÇÃO",
+    preco: 499.90,
+    imagem: "../assets/png-transparent-dietary-supplement-bodybuilding-supplement-gainer-whey-protein-bodybuilding-nutrition-whey-sports-thumbnail-removebg-preview.png",
+    quantidade: 0,
   }
-  
-  let subtotal = 0;
-  
-  carrinho.forEach(item => {
-    const itemElement = document.createElement('div');
-    itemElement.className = 'item-carrinho';
-    
-    const precoTotal = item.preco * item.quantidade;
-    subtotal += precoTotal;
-    
-    itemElement.innerHTML = `
-      <div class="item-img">
-        <img src="${item.imagem}" alt="${item.nome}">
-      </div>
-      <div class="item-info">
-        <h3>${item.nome}</h3>
-        <div class="item-controle">
-          <button class="btn-diminuir" data-id="${item.id}">-</button>
-          <span class="item-quantidade">${item.quantidade}</span>
-          <button class="btn-aumentar" data-id="${item.id}">+</button>
-        </div>
-      </div>
-      <div class="item-preco">
-        <span>R$ ${precoTotal.toFixed(2)}</span>
-        <button class="btn-remover" data-id="${item.id}">Remover</button>
-      </div>
-    `;
-    
-    carrinhoItens.appendChild(itemElement);
-  });
-  
-  // Atualizar totais
-  subtotalElement.textContent = `R$ ${subtotal.toFixed(2)}`;
-  totalElement.textContent = `R$ ${subtotal.toFixed(2)}`;
-  
-  // Adicionar eventos aos botões
-  document.querySelectorAll('.btn-diminuir').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const id = parseInt(e.target.dataset.id);
-      alterarQuantidade(id, -1);
-    });
-  });
-  
-  document.querySelectorAll('.btn-aumentar').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const id = parseInt(e.target.dataset.id);
-      alterarQuantidade(id, 1);
-    });
-  });
-  
-  document.querySelectorAll('.btn-remover').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const id = parseInt(e.target.dataset.id);
-      removerItem(id);
-    });
-  });
+];
+
+
+const carrinhoItensContainer = document.getElementById("carrinho-itens");
+const subtotalSpan = document.getElementById("subtotal");
+const totalSpan = document.getElementById("total");
+
+function formatarPreco(valor) {
+  return "R$ " + valor.toFixed(2).replace(".", ",");
 }
 
-// Função para alterar quantidade
-function alterarQuantidade(id, mudanca) {
-  const itemIndex = carrinho.findIndex(item => item.id === id);
-  
-  if (itemIndex !== -1) {
-    carrinho[itemIndex].quantidade += mudanca;
-    
-    // Remover item se quantidade for menor que 1
-    if (carrinho[itemIndex].quantidade < 1) {
-      carrinho.splice(itemIndex, 1);
-    }
-    
-    // Atualizar localStorage e renderizar
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-    renderizarCarrinho();
-  }
+function atualizarResumo() {
+  let subtotal = produtos.reduce((acc, produto) => acc + produto.preco * produto.quantidade, 0);
+  subtotalSpan.innerText = formatarPreco(subtotal);
+  totalSpan.innerText = formatarPreco(subtotal); // frete é grátis
 }
 
-// Função para remover item
-function removerItem(id) {
-  carrinho = carrinho.filter(item => item.id !== id);
-  localStorage.setItem('carrinho', JSON.stringify(carrinho));
-  renderizarCarrinho();
+function criarItemCarrinho(produto) {
+  const item = document.createElement("div");
+  item.classList.add("carrinho-item");
+  item.style.display = "flex";
+  item.style.justifyContent = "space-between";
+  item.style.alignItems = "center";
+  item.style.borderBottom = "1px solid #ddd";
+  item.style.padding = "15px 0";
+
+  item.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <img src="${produto.imagem}" alt="${produto.nome}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" />
+      <div>
+        <h4 style="margin-bottom: 5px;">${produto.nome}</h4>
+        <p style="color: #666;">${formatarPreco(produto.preco)}</p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button class="btn-quantidade" onclick="alterarQuantidade(${produto.id}, -1)">−</button>
+      <span id="quantidade-${produto.id}">${produto.quantidade}</span>
+      <button class="btn-quantidade" onclick="alterarQuantidade(${produto.id}, 1)">+</button>
+    </div>
+  `;
+
+  carrinhoItensContainer.appendChild(item);
 }
 
-// Evento para finalizar compra
-btnFinalizar.addEventListener('click', () => {
-  if (carrinho.length === 0) {
-    alert('Seu carrinho está vazio!');
-    return;
-  }
-  
-  alert('Compra finalizada com sucesso! Obrigado por comprar na ForceX.');
-  carrinho = [];
-  localStorage.setItem('carrinho', JSON.stringify(carrinho));
-  renderizarCarrinho();
-});
+function alterarQuantidade(id, delta) {
+  const produto = produtos.find(p => p.id === id);
+  if (!produto) return;
 
-// Inicializar carrinho
-document.addEventListener('DOMContentLoaded', renderizarCarrinho);
+  produto.quantidade += delta;
+ if (produto.quantidade < 0) produto.quantidade = 0;
+
+  document.getElementById(`quantidade-${produto.id}`).innerText = produto.quantidade;
+  atualizarResumo();
+}
+
+function carregarCarrinho() {
+  carrinhoItensContainer.innerHTML = "";
+  produtos.forEach(produto => criarItemCarrinho(produto));
+  atualizarResumo();
+}
+
+carregarCarrinho();

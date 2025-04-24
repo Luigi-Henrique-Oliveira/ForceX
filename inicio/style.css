@@ -280,4 +280,15 @@ main {
   border: none;
   cursor: pointer;
 }
+.refbut{
+  background-color: rgb(159, 0, 0);
+  color: #fff;
+  font-size: 20px;
+  width: 450px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
 
